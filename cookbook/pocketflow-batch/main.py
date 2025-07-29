@@ -39,7 +39,7 @@ Translated:"""
             language, translation = result["language"], result["translation"]
             
             # Write to file
-            filename = os.path.join(output_dir, f"README_{language.upper()}.md")
+            filename = os.path.join(output_dir, f"README1_{language.upper()}.md")
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(translation)
             
@@ -47,14 +47,15 @@ Translated:"""
 
 if __name__ == "__main__":
     # read the text from ../../README.md
-    with open("../../README.md", "r") as f:
+    with open("/Users/bhakti/workspace/PocketFlow/cookbook/pocketflow-batch/README_1.md", "r") as f:
         text = f.read()
     
     # Default settings
     shared = {
         "text": text,
-        "languages": ["Chinese", "Spanish", "Japanese", "German", "Russian", "Portuguese", "French", "Korean"],
-        "output_dir": "translations"
+        #"languages": ["Chinese", "Spanish", "Japanese", "German", "Russian", "Portuguese", "French", "Korean"],
+        "languages": ["Chinese", "Spanish"],
+        "output_dir": "/Users/bhakti/workspace/PocketFlow/cookbook/pocketflow-batch/translations"
     }
 
     # --- Time Measurement Start ---

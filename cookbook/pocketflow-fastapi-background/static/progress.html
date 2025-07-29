@@ -350,7 +350,7 @@
         }
 
         function connectToProgress() {
-            const eventSource = new EventSource(`/progress/${jobId}`);
+            const eventSource = new EventSource(`/progress/${jobId}`); // Create a new EventSource object to connect to the progress (SSE)endpoint
             
             eventSource.onmessage = function(event) {
                 try {

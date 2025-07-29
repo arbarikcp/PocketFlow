@@ -1,6 +1,13 @@
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+from pathlib import Path
 
+# Load environment variables when module is imported
+# Look for .env file in the project root directory
+project_root = Path(__file__).parent.parent.parent
+dotenv_path = project_root / '.env'
+load_dotenv(dotenv_path=dotenv_path)
 def call_llm(messages):
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "your-api-key"))
     

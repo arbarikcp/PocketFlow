@@ -80,3 +80,33 @@ This setup allows for a decoupled workflow logic (PocketFlow) and web interactio
 -   [`templates/index.html`](./templates/index.html): The HTML structure for the frontend user interface.
 -   [`static/style.css`](./static/style.css): Basic CSS for styling the frontend.
 -   [`requirements.txt`](./requirements.txt): Project dependencies (FastAPI, Uvicorn, Jinja2, PocketFlow).
+
+```mermaid
+sequenceDiagram
+    participant ReviewNode
+    participant SSEQueue
+    participant SSEEndpoint
+    participant WebClient
+    participant Human
+    participant ReviewEvent
+    participant FeedbackAPI
+
+    Note over ReviewNode,FeedbackAPI: 1. ReviewNode Prep Phase
+    ReviewNode->>SSEQueue: await queue.put({"status": "waiting_for_review"})
+    SSEQueue->>SSEEndpoint: await queue.get()
+    SSEEndpoint->>WebClient: data: {"status": "waiting_for_review"}
+    WebClient->>Human: Display review interface
+
+    Note over ReviewNode,FeedbackAPI: 2. ReviewNode Exec Phase
+    ReviewNode->>ReviewEvent: await review_event.wait()
+    Note over ReviewNode: ⏸️ Workflow PAUSED here
+
+    Note over ReviewNode,FeedbackAPI: 3. Human Provides Feedback
+    Human->>WebClient: Click Approve/Reject
+    WebClient->>FeedbackAPI: POST /feedback/{task_id}
+    FeedbackAPI->>SSEQueue: await queue.put({"status": "processing_feedback"})
+    FeedbackAPI->>ReviewEvent: review_event.set()
+    
+    Note over ReviewNode,FeedbackAPI: 4. Workflow Resumes
+    ReviewEvent->>ReviewNode: ⏯️ Workflow RESUMES
+    ReviewNode->>ReviewNode: Process feedback decision

@@ -30,6 +30,7 @@ class CSVProcessor(BatchNode):
         Returns:
             dict: Statistics for this chunk
         """
+        print("processing chunk.....")
         return {
             "total_sales": chunk["amount"].sum(),
             "num_transactions": len(chunk),

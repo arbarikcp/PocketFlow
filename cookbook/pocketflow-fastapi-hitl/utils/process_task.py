@@ -5,7 +5,7 @@ def process_task(input_data):
     print(f"Processing: '{input_data[:50]}...'")
     
     # Simulate work
-    time.sleep(2)
+    time.sleep(10)
 
     processed_result = f"Processed: {input_data}"
     print(f"Finished processing.")

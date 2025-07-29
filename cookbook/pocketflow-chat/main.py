@@ -4,6 +4,7 @@ from utils import call_llm
 class ChatNode(Node):
     def prep(self, shared):
         # Initialize messages if this is the first run
+        shared["threadid"] = "1"
         if "messages" not in shared:
             shared["messages"] = []
             print("Welcome to the chat! Type 'exit' to end the conversation.")

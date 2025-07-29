@@ -92,7 +92,7 @@ async def get_progress(job_id: str):
         headers={
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
-            "Content-Type": "text/event-stream"
+            "Content-Type": "text/event-stream" # Set the content type to text/event-stream for SSE events
         }
     )
 
